@@ -1,0 +1,24 @@
+# Database Configs
+quarkus:
+  datasource:
+    password: admin123
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/proposal
+    username: postgres
+  http:
+    port: '8091'
+  hibernate-orm:
+    database:
+      generation: update
+# Kafka Configs
+mp:
+  messaging:
+    connector:
+      smallrye-kafka:
+        bootstrap:
+          servers: localhost:9092
+    outgoing:
+      proposal:
+        topic: proposal
+        connector: smallrye-kafka
