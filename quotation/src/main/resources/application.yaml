@@ -1,7 +1,29 @@
 
+#Kafka configs
+mp:
+  messaging:
+    outgoing:
+      quotation-channel:
+        connector: smallrye-kafka
+        topic: quotation
+    connector:
+      smallrye-kafka:
+        bootstrap:
+          servers: localhost:9092
 
-#Rest Client Configuration
+
+#Databse Configuration
 quarkus:
+  database:
+    db-kind: postgresql
+    username: postgres
+    password: 123456
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/quotation
+  hibernate-orm:
+    database:
+      generation: update
+#Rest Client Configuration
   rest-client:
     '"org':
       br:
