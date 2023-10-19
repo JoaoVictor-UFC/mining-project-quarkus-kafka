@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mining-project-quarkus-kafka.iml" filepath="$PROJECT_DIR$/.idea/mining-project-quarkus-kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quotation/quotation.iml" filepath="$PROJECT_DIR$/quotation/quotation.iml" />
     </modules>
   </component>
 </project>
