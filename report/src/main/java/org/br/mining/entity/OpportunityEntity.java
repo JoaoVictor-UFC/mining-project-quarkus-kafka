@@ -29,4 +29,7 @@ public class OpportunityEntity {
 
     @Column(name = "last_currency_quotation")
     private BigDecimal lastDollarQuotation;
+
+    public OpportunityEntity(LocalDateTime now, Long proposalId, String customer, BigDecimal priceTonne, BigDecimal currencyPrice) {
+    }
 }

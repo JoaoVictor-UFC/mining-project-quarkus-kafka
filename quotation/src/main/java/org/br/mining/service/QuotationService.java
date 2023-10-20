@@ -9,14 +9,17 @@ import org.br.mining.entity.QuotationEntity;
 import org.br.mining.message.KafkaEvents;
 import org.br.mining.repository.QuotationRepository;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
 public class QuotationService {
+
+    private final Logger log = LoggerFactory.getLogger(QuotationService.class);
 
     public static final String USD_BRL = "USD-BRL";
 
@@ -46,26 +49,31 @@ public class QuotationService {
 
     private Boolean updateCurrentInfoPrice (CurrencyPriceDTO currencyPriceInfo){
 
-        BigDecimal currentPrice = new BigDecimal(currencyPriceInfo.getUSDBRL().getBid());
-        Boolean updatePrice = Boolean.FALSE;
+        try {
+            BigDecimal currentPrice = new BigDecimal(currencyPriceInfo.getUSDBRL().getBid());
+            Boolean updatePrice = Boolean.FALSE;
 
-        List<QuotationEntity> quotationList = repository.findAll().list();
+            List<QuotationEntity> quotationList = repository.findAll().list();
 
-        if (quotationList.isEmpty()){
+            if (quotationList.isEmpty()){
 
-            saveQuotation(currencyPriceInfo);
-            updatePrice = Boolean.TRUE;
-        } else {
-
-            QuotationEntity lastDollarPrice = quotationList.get(quotationList.size() -1);
-
-            if (currentPrice.floatValue() > lastDollarPrice.getCurrencyPrice().floatValue()){
-                updatePrice = Boolean.TRUE;
                 saveQuotation(currencyPriceInfo);
-            }
-        }
+                updatePrice = Boolean.TRUE;
+            } else {
 
-        return updatePrice;
+                QuotationEntity lastDollarPrice = quotationList.get(quotationList.size() -1);
+
+                if (currentPrice.floatValue() > lastDollarPrice.getCurrencyPrice().floatValue()){
+                    updatePrice = Boolean.TRUE;
+                    saveQuotation(currencyPriceInfo);
+                }
+            }
+
+            return updatePrice;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     private void saveQuotation(CurrencyPriceDTO dto){

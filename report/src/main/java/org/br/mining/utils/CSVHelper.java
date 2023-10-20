@@ -14,6 +14,7 @@ import java.util.List;
 public class CSVHelper {
 
     public static ByteArrayInputStream OpportunitiesToCSV(List<OpportunityDTO> opportunities) {
+        //Todo: Fix that part to something not deprecated
         final CSVFormat format = CSVFormat.DEFAULT.withHeader("ID Proposta", "Cliente", "Preco por tonelada", "Melhor cotacao de Moeda");
 
         try (
