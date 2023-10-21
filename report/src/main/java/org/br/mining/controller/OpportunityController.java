@@ -8,8 +8,7 @@ import jakarta.ws.rs.ServerErrorException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.br.mining.service.OpportunityService;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Path("/api/opportunity")
 public class OpportunityController {
@@ -30,7 +29,7 @@ public class OpportunityController {
             return Response.ok(opportunityService.generateCSVOpportunityReport(),
                     MediaType.APPLICATION_OCTET_STREAM)
                     .header("content-disposition",
-                            "attachment; filename = " + LocalDateTime.now() + "--sales-opportunity.csv")
+                            "attachment; filename = sales-opportunity_" + LocalDate.now() +".csv")
                     .build();
         }catch (ServerErrorException errorException){
             return Response.serverError().build();

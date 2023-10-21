@@ -1,19 +1,48 @@
 package org.br.mining.client;
 
+import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import org.br.mining.dto.CurrencyPriceDTO;
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 @ApplicationScoped
-@RegisterRestClient(baseUri = "https://economia.awesomeapi.com.br")
-public interface CurrencyPriceClient {
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/last/{pair}")
-    CurrencyPriceDTO getPriceByPair(@PathParam("pair") String pair);
+public class CurrencyPriceClient {
+
+    @ConfigProperty(name = "awesomeapi.api.url")
+    String apiUrl;
+    public CurrencyPriceDTO getPriceByPair(String pair){
+
+        try {
+
+            URL url = new URL(apiUrl + pair);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            if (connection.getResponseCode() != 200)
+                throw new RuntimeException("HTTP error code : " + connection.getResponseCode());
+
+            BufferedReader response = new BufferedReader(new InputStreamReader((connection.getInputStream())));
+            String jsonEmString = convertJsonString(response);
+            Gson gson = new Gson();
+
+            return gson.fromJson(jsonEmString, CurrencyPriceDTO.class);
+
+        }catch (Exception e){
+            throw new RuntimeException("ERROR: " + e);
+        }
+    }
+
+    public static String convertJsonString(BufferedReader bufferReader) throws IOException {
+        String resposta;
+        StringBuilder jsonString = new StringBuilder();
+        while ((resposta = bufferReader.readLine()) != null) {
+            jsonString.append(resposta);
+        }
+        return jsonString.toString();
+    }
 }
+

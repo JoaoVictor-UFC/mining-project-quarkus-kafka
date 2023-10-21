@@ -74,6 +74,12 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-reactive-jsonb</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel.quarkus</groupId>
+      <artifactId>camel-quarkus-gson</artifactId>
+      <version>3.4.0</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>

@@ -8,7 +8,6 @@ import org.br.mining.dto.QuotationDTO;
 import org.br.mining.entity.QuotationEntity;
 import org.br.mining.message.KafkaEvents;
 import org.br.mining.repository.QuotationRepository;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +23,7 @@ public class QuotationService {
     public static final String USD_BRL = "USD-BRL";
 
     @Inject
-    @RestClient
-    CurrencyPriceClient currencyPriceClient;
+    CurrencyPriceClient priceClient;
 
     @Inject
     QuotationRepository repository;
@@ -36,7 +34,7 @@ public class QuotationService {
     public void getCurrencyPrice() {
 
 
-        CurrencyPriceDTO currencyPriceInfo = currencyPriceClient.getPriceByPair(USD_BRL);
+        CurrencyPriceDTO currencyPriceInfo = priceClient.getPriceByPair(USD_BRL);
 
         if (updateCurrentInfoPrice(currencyPriceInfo)){
             events.sendNewKafkaEvent(QuotationDTO

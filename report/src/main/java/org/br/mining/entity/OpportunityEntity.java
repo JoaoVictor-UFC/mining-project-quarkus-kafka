@@ -31,5 +31,10 @@ public class OpportunityEntity {
     private BigDecimal lastDollarQuotation;
 
     public OpportunityEntity(LocalDateTime now, Long proposalId, String customer, BigDecimal priceTonne, BigDecimal currencyPrice) {
+        this.date = now;
+        this.proposalId = proposalId;
+        this.customer = customer;
+        this.priceTonne = priceTonne;
+        this.lastDollarQuotation = currencyPrice;
     }
 }
