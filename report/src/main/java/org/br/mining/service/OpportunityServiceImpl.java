@@ -61,7 +61,20 @@ public class OpportunityServiceImpl implements OpportunityService{
 
     @Override
     public List<OpportunityDTO> generateOpportunityData() {
-        return null;
+        List<OpportunityDTO> opportunities = new ArrayList<>();
+
+        opportunityRepository
+                .findAll()
+                .stream()
+                .forEach(item ->
+                        opportunities.add(OpportunityDTO.builder()
+                                        .proposalId(item.getProposalId())
+                                        .customer(item.getCustomer())
+                                        .priceTonne(item.getPriceTonne())
+                                        .lastDollarQuotation(item.getLastDollarQuotation())
+                                .build()));
+
+        return opportunities;
     }
 
     @Override

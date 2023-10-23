@@ -9,12 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="proposal" />
         <module name="report" />
+        <module name="gateway-bff" />
         <module name="quotation" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gateway-bff" options="-parameters" />
       <module name="proposal" options="-parameters" />
       <module name="quotation" options="-parameters" />
       <module name="report" options="-parameters" />
