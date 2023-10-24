@@ -10,9 +10,6 @@ import org.br.mining.entity.OpportunityEntity;
 import org.br.mining.entity.QuotationEntity;
 import org.br.mining.repository.OpportunityRepository;
 import org.br.mining.repository.QuotationRepository;
-import org.br.mining.utils.CSVHelper;
-
-import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,21 +72,5 @@ public class OpportunityServiceImpl implements OpportunityService{
                                 .build()));
 
         return opportunities;
-    }
-
-    @Override
-    public ByteArrayInputStream generateCSVOpportunityReport() {
-
-        List<OpportunityDTO> opportunityList = new ArrayList<>();
-
-        opportunityRepository.findAll().list().forEach(
-                item -> opportunityList.add(OpportunityDTO.builder()
-                        .proposalId(item.getProposalId())
-                        .customer(item.getCustomer())
-                        .priceTonne(item.getPriceTonne())
-                        .lastDollarQuotation(item.getLastDollarQuotation())
-                        .build()));
-
-        return CSVHelper.OpportunitiesToCSV(opportunityList);
     }
 }

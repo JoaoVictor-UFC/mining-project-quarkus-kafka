@@ -31,23 +31,6 @@ public class OpportunityController {
     }
 
     @GET
-    @Path("/report")
-    @RolesAllowed("")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response generateReport(){
-
-        try {
-            return Response.ok(opportunityService.generateCSVOpportunityReport(),
-                    MediaType.APPLICATION_OCTET_STREAM)
-                    .header("content-disposition",
-                            "attachment; filename = sales-opportunity_" + LocalDate.now() +".csv")
-                    .build();
-        }catch (ServerErrorException errorException){
-            return Response.serverError().build();
-        }
-    }
-
-    @GET
     @Path("/data")
     @RolesAllowed({"user", "manager"})
     public List<OpportunityDTO> generateReportInfos(){
