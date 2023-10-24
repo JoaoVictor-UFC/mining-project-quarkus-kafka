@@ -8,12 +8,14 @@ import org.br.mining.dto.ProposalDetailsDTO;
 import org.br.mining.entity.ProposalEntity;
 import org.br.mining.message.KafkaEvent;
 import org.br.mining.repository.ProposalRepository;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 
 @ApplicationScoped
+@Traced
 public class ProposalServiceImpl implements ProposalService{
 
     private final Logger logger = LoggerFactory.getLogger(KafkaEvent.class);

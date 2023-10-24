@@ -8,14 +8,15 @@ import org.br.mining.dto.QuotationDTO;
 import org.br.mining.entity.QuotationEntity;
 import org.br.mining.message.KafkaEvents;
 import org.br.mining.repository.QuotationRepository;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
+@Traced
 public class QuotationService {
 
     private final Logger log = LoggerFactory.getLogger(QuotationService.class);
@@ -58,7 +59,6 @@ public class QuotationService {
                 saveQuotation(currencyPriceInfo);
                 updatePrice = Boolean.TRUE;
             } else {
-
                 QuotationEntity lastDollarPrice = quotationList.get(quotationList.size() -1);
 
                 if (currentPrice.floatValue() > lastDollarPrice.getCurrencyPrice().floatValue()){

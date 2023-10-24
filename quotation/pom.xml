@@ -79,7 +79,10 @@
       <artifactId>camel-quarkus-gson</artifactId>
       <version>3.4.0</version>
     </dependency>
-
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-opentracing</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

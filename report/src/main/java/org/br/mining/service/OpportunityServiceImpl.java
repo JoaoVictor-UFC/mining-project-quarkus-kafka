@@ -10,12 +10,15 @@ import org.br.mining.entity.OpportunityEntity;
 import org.br.mining.entity.QuotationEntity;
 import org.br.mining.repository.OpportunityRepository;
 import org.br.mining.repository.QuotationRepository;
+import org.eclipse.microprofile.opentracing.Traced;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @ApplicationScoped
+@Traced
 public class OpportunityServiceImpl implements OpportunityService{
 
     private final QuotationRepository quotationRepository;
